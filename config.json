@@ -1,0 +1,65 @@
+{
+  "smtp": {
+    "host": "smtp.example.com",
+    "port": 587,
+    "user": "alerts@example.com",
+    "password": "CHANGE_ME",
+    "from_addr": "alerts@example.com",
+    "use_tls": true
+  },
+
+  "apis": {
+    "merchant_balance": {
+      "url": "http://localhost:8000/api/v1/balance-inquiry",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-API-Key": "wsk_test_1234567890"
+      },
+      "payload_template": {
+        "COMMAND": {
+          "TYPE": "RBEREQ",
+          "MSISDN": "{account}",
+          "PROVIDER": "101",
+          "PAYID": "12",
+          "MPIN": "{mpin}",
+          "LANGUAGE1": "1"
+        }
+      },
+      "response_balance_field": "COMMAND.BALANCE"
+    }
+  },
+  "alerts": [
+    {
+      "id": "ALERT_WAL_01",
+      "api_ref": "merchant_balance",
+      "params": {
+        "account": "0779281234",
+        "mpin": "0000"
+      },
+      "headers": {
+        "apiKey": "atsk_838e7c19adcd7bd5939188625bec514448ebefde23444817a7ab73a43a7c5b51bd63f60e",
+        "Content-Type": "application/json"
+      },
+      "threshold": { "operator": "<", "value": 1000.00 },
+      "schedule_cron": "0 * * * *",
+      "channels": [
+        { "type": "sms", "recipient": "+1234567890", "api_gateway": "https://api.africastalking.com/version1/messaging/bulk", "method": "POST" },
+        { "type": "smtp", "recipient": "mubarrie@africell" }
+      ]
+    },
+    {
+      "id": "ALERT_WAL_02",
+      "api_ref": "merchant_balance",
+      "params": {
+        "account": "0779281234",
+        "mpin": "0000"
+      },
+      "threshold": { "operator": "<", "value": 200.00 },
+      "schedule_cron": "*/5 * * * *",
+      "channels": [
+        { "type": "webhook", "url": "http://localhost:8002/webhook/send", "method": "POST" }
+      ]
+    }
+  ]
+}

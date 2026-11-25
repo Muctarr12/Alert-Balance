@@ -1,0 +1,5 @@
+2026-11-24 15:41:32,486 [INFO] alerter: [ALERT_WAL_01] balance = 800.77
+2026-11-24 15:41:32,486 [WARNING] alerter: [ALERT_WAL_01] THRESHOLD BREACHED (800.77 < 1000.0)
+2026-11-24 15:41:36,259 [ERROR] alerter: [ALERT_WAL_01] sms: FAILED (HTTPSConnectionPool(host='api.africastalking.com', port=443): Max retries exceeded with url: /version1/messaging/bulk (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1082)'))))
+2026-11-24 15:41:36,375 [ERROR] alerter: [ALERT_WAL_01] smtp: FAILED ([Errno 11001] getaddrinfo failed)
+2026-11-24 15:41:38,482 [INFO] alerter: [ALERT_WAL_02] balance = 800.77
